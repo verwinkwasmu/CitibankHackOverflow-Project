@@ -35,6 +35,7 @@ app.use('/', require('./routes/vouchersRoute'))
 app.use('/', require('./routes/userRoute'))
 app.use('/', require('./routes/cartRoute'))
 app.use('/', require('./routes/libraryRoute'))
+app.use('/', require('./routes/transactionsRoute'))
 
 
 // port hosted on 3000 (access via localhost:3000)
