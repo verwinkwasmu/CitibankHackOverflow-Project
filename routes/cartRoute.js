@@ -4,18 +4,19 @@ const router = express.Router()
 const {Cart} = require('../models/cart')
 
 //get all products in cart
-router.get('/cart', (req,res) => {
-    Cart.find({}, (err,data) => {
-        if(!err){
-            res.send(data);
-        }else{
-            console.log(err)
-        }
-    })
+router.get('/cart', async (req,res) => {
+
+    try{
+        const cart = await Cart.find();
+        res.json(cart)
+    } catch(err) {
+        res.json({message: err})
+    }
+    
 })
 
 // Add to Cart (*** array system ) right now im only adding one item to cart
-router.post('/cart/add', (req,res) => {
+router.post('/cart/add', async (req,res) => {
     const cart = new Cart({
         productID: req.body.productID,
         productName: req.body.productName,
@@ -23,9 +24,13 @@ router.post('/cart/add', (req,res) => {
         value: req.body.value,
         expiryDuration: req.body.expiryDuration,
     });
-    cart.save((err, data) => {
-        res.status(200).json({code: 200, message: 'Product Added Successfully to Cart', addCart:data})
-    })
+    try{
+        const savedCart = await cart.save();
+        res.json(savedCart)
+    } catch(err){
+        res.json({message: err})
+    }
+    
 })
 
 module.exports = router 

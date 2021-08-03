@@ -1,17 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
-const {Product} = require('../models/products')
+const {Voucher} = require('../models/vouchers')
 
-//get all products
-router.get('/api/products', (req,res) => {
-    Product.find({}, (err,data) => {
-        if(!err){
-            res.send(data);
-        }else{
-            console.log(err)
-        }
-    })
+//get all Vouchers
+router.get('/vouchers', async (req,res) => {
+    try{
+        const voucher = await Voucher.find();
+        res.json(voucher)
+    } catch(err) {
+        res.json({message: err})
+    }
 })
 // // Create product
 // router.post('/api/products/add', (req,res) => {
@@ -27,15 +26,16 @@ router.get('/api/products', (req,res) => {
 //     })
 // })
 
-// get single product (finding by default ID need to find a way to find by product)
-router.get('/api/products/:id', (req,res) => {
-    Product.findById(req.params.id,(err,data) => {
-        if(!err){
-            res.send(data);
-        }else{
-            console.log(err)
-        }
-    })
+// get single voucher via voucherID
+router.get('/vouchers/:voucherID', async (req,res) => {
+
+    try{
+        const voucher = await Voucher.find({voucherID : req.params.voucherID})
+        console.log(req.params)
+        res.json(voucher)
+    } catch(err) {
+        res.json({message : err})
+    }
     
 })
 

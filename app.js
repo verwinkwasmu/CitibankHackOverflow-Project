@@ -31,7 +31,7 @@ dotenv.config({path: './config/config.env'})
 connectDB();
 
 // Access Routes
-app.use('/', require('./routes/productsRoute'))
+app.use('/', require('./routes/vouchersRoute'))
 app.use('/', require('./routes/userRoute'))
 app.use('/', require('./routes/cartRoute'))
 app.use('/', require('./routes/libraryRoute'))

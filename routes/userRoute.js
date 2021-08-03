@@ -4,17 +4,27 @@ const router = express.Router()
 const {User} = require('../models/user')
 
 // Get All Users
-router.get('/user', (req,res) => {
-    User.find({}, (err,data) => {
-        if(!err){
-            res.send(data);
-        }else{
-            console.log(err)
-        }
-    })
+router.get('/users', async (req,res) => {
+    try{
+        const user = await User.find();
+        res.json(user)
+    } catch(err) {
+        res.json({message: err})
+    }
 })
+
+// Get one user via userID
+router.get('/users/:userID', async (req,res) => {
+    try{
+        const user = await User.find({userID : req.params.userID});
+        res.json(user)
+    } catch(err) {
+        res.json({message: err})
+    }
+})
+
 // Create a User
-router.post('/user/add', (req,res) => {
+router.post('/users/add', async (req,res) => {
     const user = new User({
         userID: req.body.userID,
         userName: req.body.userName,
@@ -23,9 +33,13 @@ router.post('/user/add', (req,res) => {
         userType: req.body.userType,
         loyaltyPoints: req.body.loyaltyPoints
     });
-    user.save((err, data) => {
-        res.status(200).json({code: 200, message: 'Product Added Successfully', addUser:data})
-    })
+
+    try{
+        const savedUser = await user.save();
+        res.json(savedUser)
+    } catch(err){
+        res.json({message: err})
+    }
 })
 
 // Authenticate User

@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
-const Product = mongoose.model('products', {
-    productID: {
+const Voucher = mongoose.model('vouchers', {
+    voucherID: {
         type: String,
         required: true
     },
-    productName: {
+    voucherName: {
         type: String,
         required: true
     },
@@ -23,4 +23,4 @@ const Product = mongoose.model('products', {
     },
 })
 
-module.exports = {Product}
+module.exports = {Voucher}
