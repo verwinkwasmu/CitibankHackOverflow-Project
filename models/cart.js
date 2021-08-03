@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const Cart = mongoose.model('carts', {
-    productID: {
+    voucherID: {
         type: String,
         required: true
     },
-    productName: {
+    voucherName: {
         type: String,
         required: true
     },
