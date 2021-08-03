@@ -9,7 +9,7 @@ const Voucher = mongoose.model('vouchers', {
         type: String,
         required: true
     },
-    price: {
+    costPrice: {
         type: Number,
         required: true
     },
@@ -18,6 +18,14 @@ const Voucher = mongoose.model('vouchers', {
         required: true
     },
     expiryDuration: {
+        type: Number,
+        required: true
+    },
+    imgSRC: {
+        type: String,
+        required: true
+    },
+    lazcoins: {
         type: Number,
         required: true
     },
