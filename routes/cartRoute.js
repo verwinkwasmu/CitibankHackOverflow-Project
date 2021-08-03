@@ -1,11 +1,9 @@
 const express = require('express')
 const router = express.Router()
-
 const {Cart} = require('../models/cart')
 
 //get all products in cart
 router.get('/cart', async (req,res) => {
-
     try{
         const cart = await Cart.find();
         res.json(cart)

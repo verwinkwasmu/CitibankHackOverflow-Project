@@ -3,26 +3,17 @@ const router = express.Router()
 
 const {Library} = require('../models/library')
 
-//get available vouchers
-// router.get('/library/:', (req,res) => {
-//     Library.find({}, (err,data) => {
-//         if(!err){
-//             res.send(data);
-//         }else{
-//             console.log(err)
-//         }
-//     })
-// })
-// //get redeemed vouchers
-// router.get('/library:', (req,res) => {
-//     Library.find({}, (err,data) => {
-//         if(!err){
-//             res.send(data);
-//         }else{
-//             console.log(err)
-//         }
-//     })
-// })
+
+// Get Vouchers based on status
+router.get('/library/:status', async (req,res) => {
+    try{
+        const library = await Library.find({status : req.params.status});
+        res.json(library)
+    } catch(err) {
+        res.json({message: err})
+    }
+})
+
 
 
 module.exports = router 
