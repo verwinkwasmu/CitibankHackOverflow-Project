@@ -1,216 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shopping Cart</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="user_assets/favicon.ico" />
-        <!-- Bootstrap icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="user_css/Ustyles.css" rel="stylesheet" />
 
-        <style>
-            a, a:hover, a:focus, a:active {
-                text-decoration: none;
-                color: inherit;
-            }
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Shopping Cart</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="user_assets/favicon.ico" />
+    <!-- jquery script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="user_css/Ustyles.css" rel="stylesheet" />
 
-            .payment-info {
-                background: blue;
-                padding: 10px;
-                border-radius: 6px;
-                color: #fff;
-                font-weight: bold
-            }
+    <style>
+        a,
+        a:hover,
+        a:focus,
+        a:active {
+            text-decoration: none;
+            color: inherit;
+        }
 
-            .product-details {
-                padding: 10px
-            }
+        .payment-info {
+            background: blue;
+            padding: 10px;
+            border-radius: 6px;
+            color: #fff;
+            font-weight: bold
+        }
 
-            body {
-                background: #eee
-            }
+        .product-details {
+            padding: 10px
+        }
 
-            .cart {
-                background: #fff
-            }
+        body {
+            background: #eee
+        }
 
-            .p-about {
-                font-size: 12px
-            }
+        .cart {
+            background: #fff
+        }
 
-            .table-shadow {
-                -webkit-box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42);
-                box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42)
-            }
+        .p-about {
+            font-size: 12px
+        }
 
-            .type {
-                font-weight: 400;
-                font-size: 10px
-            }
+        .table-shadow {
+            -webkit-box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42);
+            box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42)
+        }
 
-            label.radio {
-                cursor: pointer
-            }
+        .type {
+            font-weight: 400;
+            font-size: 10px
+        }
 
-            label.radio input {
-                position: absolute;
-                top: 0;
-                left: 0;
-                visibility: hidden;
-                pointer-events: none
-            }
+        label.radio {
+            cursor: pointer
+        }
 
-            label.radio span {
-                padding: 1px 12px;
-                border: 2px solid #ada9a9;
-                display: inline-block;
-                color: #8f37aa;
-                border-radius: 3px;
-                text-transform: uppercase;
-                font-size: 11px;
-                font-weight: 300
-            }
+        label.radio input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            visibility: hidden;
+            pointer-events: none
+        }
 
-            label.radio input:checked+span {
-                border-color: #fff;
-                background-color: blue;
-                color: #fff
-            }
+        label.radio span {
+            padding: 1px 12px;
+            border: 2px solid #ada9a9;
+            display: inline-block;
+            color: #8f37aa;
+            border-radius: 3px;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 300
+        }
 
-            .credit-inputs {
-                background: rgb(102, 102, 221);
-                color: #fff !important;
-                border-color: rgb(102, 102, 221)
-            }
+        label.radio input:checked+span {
+            border-color: #fff;
+            background-color: blue;
+            color: #fff
+        }
 
-            .credit-inputs::placeholder {
-                color: #fff;
-                font-size: 13px
-            }
+        .credit-inputs {
+            background: rgb(102, 102, 221);
+            color: #fff !important;
+            border-color: rgb(102, 102, 221)
+        }
 
-            .credit-card-label {
-                font-size: 9px;
-                font-weight: 300
-            }
+        .credit-inputs::placeholder {
+            color: #fff;
+            font-size: 13px
+        }
 
-            .form-control.credit-inputs:focus {
-                background: rgb(102, 102, 221);
-                border: rgb(102, 102, 221)
-            }
+        .credit-card-label {
+            font-size: 9px;
+            font-weight: 300
+        }
 
-            .line {
-                border-bottom: 1px solid rgb(102, 102, 221)
-            }
+        .form-control.credit-inputs:focus {
+            background: rgb(102, 102, 221);
+            border: rgb(102, 102, 221)
+        }
 
-            .information span {
-                font-size: 12px;
-                font-weight: 500
-            }
+        .line {
+            border-bottom: 1px solid rgb(102, 102, 221)
+        }
 
-            .information {
-                margin-bottom: 5px
-            }
+        .information span {
+            font-size: 12px;
+            font-weight: 500
+        }
 
-            .items {
-                -webkit-box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
-                box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.08)
-            }
+        .information {
+            margin-bottom: 5px
+        }
 
-            .spec {
-                font-size: 11px
-            }
+        .items {
+            -webkit-box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
+            box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.08)
+        }
 
-        </style>
-    </head>
-    <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="user_index.html">Lazerda Shop</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" aria-current="page" href="#!">Home</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-                                <li><a class="dropdown-item" href="analytics.html">Transactions</a></li>
-                                <li><a class="dropdown-item" href="library.html">Vouchers</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <form class="d-flex" action="cart.html">
-                        <button class="btn btn-outline-dark">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>
+        .spec {
+            font-size: 11px
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="user_index.html">Lazerda Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#!">Home</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">All Products</a></li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li><a class="dropdown-item" href="analytics.html">Transactions</a></li>
+                            <li><a class="dropdown-item" href="library.html">Vouchers</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" action="cart.html">
+                    <button class="btn btn-outline-dark">
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!--Payment-->
+    <div class="container mt-5 p-3 rounded cart">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="product-details mr-2">
+                    <div class="d-flex flex-row align-items-center"><i class="fa fa-long-arrow-left"></i>
+                        <a href="user_index.html"><span class="ml-2">Back to Homepage</span></a>
+                    </div>
+                    <hr>
+                    <h6 class="mb-0">Shopping Cart</h6>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
+                        <div class="d-flex flex-row">
+                            <div class="ml-2"><span class="font-weight-bold d-block">$10 Voucher</span><span
+                                    class="spec">Food</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center"><span
+                                class="d-block ml-5 font-weight-bold">$8</span><i
+                                class="fa fa-trash-o ml-3 text-black-50"></i>
+                        </div>
+                        
+                    </div>
+                    <section id="display"></section>
                 </div>
             </div>
-        </nav>
-
-        <!--Payment-->
-        <div class="container mt-5 p-3 rounded cart">
-            <div class="row no-gutters">
-                <div class="col-md-8">
-                    <div class="product-details mr-2">
-                        <div class="d-flex flex-row align-items-center"><i class="fa fa-long-arrow-left"></i>
-                            <a href="user_index.html"><span class="ml-2">Back to Homepage</span></a></div>
-                        <hr>
-                        <h6 class="mb-0">Shopping Cart</h6>
-
-                        <div class="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
-                            <div class="d-flex flex-row">
-                                <div class="ml-2"><span class="font-weight-bold d-block">$10 Voucher</span><span class="spec">Food</span></div>
-                            </div>
-                            <div class="d-flex flex-row align-items-center"><span class="d-block ml-5 font-weight-bold">$8</span><i class="fa fa-trash-o ml-3 text-black-50"></i></div>
-                        </div>
+            <div class="col-md-4">
+                <div class="payment-info">
+                    <div class="d-flex justify-content-between align-items-center"><span>Payment</span></div>
+                    <span class="type d-block mt-3 mb-1">Card type</span><label class="radio"> <input type="radio"
+                            name="card" value="payment" checked> <span><img width="30"
+                                src="https://img.icons8.com/color/48/000000/mastercard.png" /></span> </label>
+                    <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30"
+                                src="https://img.icons8.com/officel/48/000000/visa.png" /></span> </label>
+                    <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30"
+                                src="https://img.icons8.com/ultraviolet/48/000000/amex.png" /></span> </label>
+                    <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30"
+                                src="https://img.icons8.com/officel/48/000000/paypal.png" /></span> </label>
+                    <div><label class="credit-card-label">Name on Card</label><input type="text"
+                            class="form-control credit-inputs"></div>
+                    <div><label class="credit-card-label">Card Number</label><input type="text"
+                            class="form-control credit-inputs"></div>
+                    <div class="row">
+                        <div class="col-md-6"><label class="credit-card-label">Date</label><input type="text"
+                                class="form-control credit-inputs" placeholder="MM/YY"></div>
+                        <div class="col-md-6"><label class="credit-card-label">CVV</label><input type="text"
+                                class="form-control credit-inputs"></div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="payment-info">
-                        <div class="d-flex justify-content-between align-items-center"><span>Payment</span></div>
-                        <span class="type d-block mt-3 mb-1">Card type</span><label class="radio"> <input type="radio" name="card" value="payment" checked> <span><img width="30" src="https://img.icons8.com/color/48/000000/mastercard.png" /></span> </label>
-                        <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/visa.png" /></span> </label>
-                        <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/ultraviolet/48/000000/amex.png" /></span> </label>
-                        <label class="radio"> <input type="radio" name="card" value="payment"> <span><img width="30" src="https://img.icons8.com/officel/48/000000/paypal.png" /></span> </label>
-                        <div><label class="credit-card-label">Name on Card</label><input type="text" class="form-control credit-inputs"></div>
-                        <div><label class="credit-card-label">Card Number</label><input type="text" class="form-control credit-inputs"></div>
-                        <div class="row">
-                            <div class="col-md-6"><label class="credit-card-label">Date</label><input type="text" class="form-control credit-inputs" placeholder="MM/YY"></div>
-                            <div class="col-md-6"><label class="credit-card-label">CVV</label><input type="text" class="form-control credit-inputs"></div>
-                        </div>
-                        <hr class="line">
-                        <div class="d-flex justify-content-between information"><span>Subtotal</span><span>$0</span></div>
-                        <div class="d-flex justify-content-between information"><span>Shipping</span><span>$0</span></div>
-                        <div class="d-flex justify-content-between information"><span>Total(Incl. taxes)</span><span>$0</span></div>
-                        
-                        <button class="btn btn-primary btn-block d-flex justify-content-between mt-3" type="button"><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button>
-                    </div>
+                    <hr class="line">
+                    <div class="d-flex justify-content-between information"><span>Subtotal</span><span>$0</span></div>
+                    <div class="d-flex justify-content-between information"><span>Shipping</span><span>$0</span></div>
+                    <div class="d-flex justify-content-between information"><span>Total(Incl.
+                            taxes)</span><span>$0</span></div>
+
+                    <button class="btn btn-primary btn-block d-flex justify-content-between mt-3"
+                        type="button"><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Lazerda 2021</p></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/Uscripts.js"></script>
-    </body>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Lazerda 2021</p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/Uscripts.js"></script>
+    <!-- CART SCRIPTS -->
+    <script>
+        $(document).ready(function () {
+            fetch('/cart', {
+                method: 'get'
+            })
+                .then(response => response.json())
+                .then(function (data) {
+                    console.log(data)
+                    for (let voucher of data) {
+                        $('#display').append(`<div class="col mb-5">
+                                            <div class="card h-100" id="${voucher._id}">
+                                                <!-- Product image-->
+                                                <img class="card-img-top" src="${voucher.imgSRC}" alt="..." />
+                                                <!-- Product details-->
+                                                <div class="card-body p-4">
+                                                    <div class="text-center">
+                                                        <!-- Product name-->
+                                                        <h5 id="voucherName-${voucher._id}"class="fw-bolder">${voucher.voucherName}</h5>
+                                                        <h5 id="voucherID-${voucher._id}"class="fw-bolder d-none">${voucher.voucherID}</h5>
+                                                        <h5 id="value-${voucher._id}"class="fw-bolder d-none">${voucher.value}</h5>
+                                                        <!-- Product price-->
+                                                        $<span id="costPrice-${voucher._id}">${voucher.costPrice}</span> or <span id="lazcoins-${voucher._id}">${voucher.lazcoins}</span> LazCoins
+                                                    </div>
+                                                </div>
+                                                <!-- Product actions-->
+                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                                                    <button type="button" class="btn btn-outline-danger" onclick="removeFromCart('${voucher._id}')">Remove</button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`)
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+        })
+
+
+        async function removeFromCart(ID) {
+            try {
+                const response = await fetch(`/cart/delete/${ID}`, {
+                    method: 'DELETE'
+                });
+                const result = await response.json()
+                console.log(result)
+                if (result) {
+                    alert("Successful")
+                    location.reload()
+                } else {
+                    alert("Error unable to add to cart. Please try again later")
+                }
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    </script>
+</body>
+
 </html>

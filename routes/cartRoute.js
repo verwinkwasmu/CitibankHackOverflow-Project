@@ -18,9 +18,9 @@ router.post('/cart/add', async (req,res) => {
     const cart = new Cart({
         voucherID: req.body.voucherID,
         voucherName: req.body.voucherName,
-        price: req.body.price,
+        costPrice: req.body.costPrice,
         value: req.body.value,
-        expiryDuration: req.body.expiryDuration,
+        lazcoins: req.body.lazcoins
     });
     try{
         const savedCart = await cart.save();
@@ -32,15 +32,17 @@ router.post('/cart/add', async (req,res) => {
 })
 
 // Delete exisiting voucher from cart
-router.delete('/cart/delete/:voucherID', (req, res) => {
-    Cart.findOneAndDelete({voucherID : req.params.voucherID}, (err) => {
-        if (err){
-            res.send("Failed")
+router.delete('/cart/delete/:id', (req, res) => {
+    Cart.findByIdAndRemove(req.params.id, (err,data) => {
+        if (!err){
+            res.status(200).json({code:200, message: 'Voucher Removed Succesfully',
+            deleteVoucher: data})
         }
         else{
-            res.send("Successfully Deleted")
+            res.status(400).json({code:400, message: 'Failed, Please try again'})
         }
     })
 })
+
 
 module.exports = router 

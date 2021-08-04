@@ -81,46 +81,77 @@
     <script src="js/Uscripts.js"></script>
 
     <!-- Loading Fetch Data -->
-    <script>
-        $(document).ready(function () {
-            fetch('/vouchers', {
-                method: 'get'
-            })
-                .then(response => response.json())
-                .then(function (data) {
-                    console.log(data)
-                    for (let voucher of data){
-                        $('#display').append(`<div class="col mb-5">
-                                                <div class="card h-100" id="${voucher._id}">
-                                                    <!-- Product image-->
-                                                    <img class="card-img-top" src="${voucher.imgSRC}" alt="..." />
-                                                    <!-- Product details-->
-                                                    <div class="card-body p-4">
-                                                        <div class="text-center">
-                                                            <!-- Product name-->
-                                                            <h5 id="voucherName"class="fw-bolder">${voucher.voucherName}</h5>
-                                                            <h5 id="voucherID"class="fw-bolder d-none">${voucher.voucherID}</h5>
-                                                            <h5 id="value"class="fw-bolder d-none">${voucher.value}</h5>
-                                                            <!-- Product price-->
-                                                            <span id="price">$${voucher.costPrice}</span> or <span id="lazcoins">${voucher.lazcoins} LazCoins</span>
-                                                        </div>
-                                                    </div>
-                                                    <!-- Product actions-->
-                                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to Cart</a>
-                                                        </div>
+<script>
+    $(document).ready(function () {
+        fetch('/vouchers', {
+            method: 'get'
+        })
+            .then(response => response.json())
+            .then(function (data) {
+                console.log(data)
+                for (let voucher of data){
+                    $('#display').append(`<div class="col mb-5">
+                                            <div class="card h-100" id="${voucher._id}">
+                                                <!-- Product image-->
+                                                <img class="card-img-top" src="${voucher.imgSRC}" alt="..." />
+                                                <!-- Product details-->
+                                                <div class="card-body p-4">
+                                                    <div class="text-center">
+                                                        <!-- Product name-->
+                                                        <h5 id="voucherName-${voucher._id}"class="fw-bolder">${voucher.voucherName}</h5>
+                                                        <h5 id="voucherID-${voucher._id}"class="fw-bolder d-none">${voucher.voucherID}</h5>
+                                                        <h5 id="value-${voucher._id}"class="fw-bolder d-none">${voucher.value}</h5>
+                                                        <!-- Product price-->
+                                                        $<span id="costPrice-${voucher._id}">${voucher.costPrice}</span> or <span id="lazcoins-${voucher._id}">${voucher.lazcoins}</span> LazCoins
                                                     </div>
                                                 </div>
-                                            </div>`)
-                    }
-                }).catch(function (error) {
-                    console.log(error);
-                });
+                                                <!-- Product actions-->
+                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                    <div class="text-center"><button class="btn btn-outline-dark mt-auto" onclick="addToCart('${voucher._id}')">Add to Cart</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`)
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
 
-        })
+    })
+    
+    async function addToCart(ID){
+        let voucherID = $(`#voucherID-${ID}`).text()
+        let voucherName = $(`#voucherName-${ID}`).text()
+        let costPrice = $(`#costPrice-${ID}`).text()
+        let value = $(`#value-${ID}`).text()
+        let lazcoins = $(`#lazcoins-${ID}`).text()
         
+        let json_file = {
+            "voucherID": voucherID,
+            "voucherName": voucherName,
+            "costPrice": parseInt(costPrice),
+            "value": parseInt(value),
+            "lazcoins": parseInt(lazcoins),
+        }
 
-    </script>
+        try{
+            const response = await fetch('/cart/add', {
+                method: 'POST',
+                    headers: { "Content-Type": "application/json" }, body: JSON.stringify(json_file)
+                });
+            const result = await response.json()
+            console.log(result)
+            if (result){
+                alert("Successful")
+            } else{
+                alert("Error unable to add to cart. Please try again later")
+            }
+
+        } catch(err){
+            console.log(err)
+        }
+    }
+</script>
 </body>
 
 </html>

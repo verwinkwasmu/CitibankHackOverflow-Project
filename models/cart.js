@@ -9,7 +9,7 @@ const Cart = mongoose.model('carts', {
         type: String,
         required: true
     },
-    price: {
+    costPrice: {
         type: Number,
         required: true
     },
@@ -17,10 +17,11 @@ const Cart = mongoose.model('carts', {
         type: Number,
         required: true
     },
-    expiryDuration: {
+    lazcoins: {
         type: Number,
         required: true
     },
+    
 })
 
 module.exports = {Cart}
