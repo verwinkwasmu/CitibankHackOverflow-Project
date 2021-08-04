@@ -182,7 +182,7 @@
 
                     <br>
                     <div class="container">
-                        <div id="display" class="row col-md-6 justify-content-start">
+                        <div id="display" class="row col-md justify-content-start">
 
                         </div>
                     </div>
@@ -257,8 +257,8 @@
                             "imgSRC": voucher.imgSRC
                         })
                         subtotal += voucher.costPrice
-                        $('#display').append(`<div class="col mb-5">
-                                            <div class="card h-100" id="${voucher._id}">
+                        $('#display').append(`<div class="col mb-3">
+                                            <div class="card h-100" style="width: 18rem; id="${voucher._id}">
                                                 <!-- Product image-->
                                                 <img class="card-img-top" src="${voucher.imgSRC}" alt="..." />
                                                 <!-- Product details-->
