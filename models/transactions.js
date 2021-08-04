@@ -30,7 +30,7 @@ const Transaction = mongoose.model('transactions', {
         required: true
     },
     transactionID: {
-        type: Number,
+        type: String,
         required: true
     },
     originalValueOfProduct: {
