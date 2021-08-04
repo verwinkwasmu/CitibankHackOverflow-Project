@@ -20,7 +20,8 @@ router.post('/cart/add', async (req,res) => {
         voucherName: req.body.voucherName,
         costPrice: req.body.costPrice,
         value: req.body.value,
-        lazcoins: req.body.lazcoins
+        lazcoins: req.body.lazcoins,
+        imgSRC: req.body.imgSRC
     });
     try{
         const savedCart = await cart.save();

@@ -17,6 +17,10 @@ const Cart = mongoose.model('carts', {
         type: Number,
         required: true
     },
+    imgSRC: {
+        type: String,
+        required: true
+    },
     lazcoins: {
         type: Number,
         required: true

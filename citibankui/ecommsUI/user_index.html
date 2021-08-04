@@ -93,7 +93,7 @@
                     $('#display').append(`<div class="col mb-5">
                                             <div class="card h-100" id="${voucher._id}">
                                                 <!-- Product image-->
-                                                <img class="card-img-top" src="${voucher.imgSRC}" alt="..." />
+                                                <img id="imgSRC-${voucher._id}"class="card-img-top" src="${voucher.imgSRC}" alt="..." />
                                                 <!-- Product details-->
                                                 <div class="card-body p-4">
                                                     <div class="text-center">
@@ -125,6 +125,7 @@
         let costPrice = $(`#costPrice-${ID}`).text()
         let value = $(`#value-${ID}`).text()
         let lazcoins = $(`#lazcoins-${ID}`).text()
+        let imgSRC = $(`#imgSRC-${ID}`).attr('src')
         
         let json_file = {
             "voucherID": voucherID,
@@ -132,6 +133,7 @@
             "costPrice": parseInt(costPrice),
             "value": parseInt(value),
             "lazcoins": parseInt(lazcoins),
+            "imgSRC": imgSRC
         }
 
         try{

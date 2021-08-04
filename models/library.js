@@ -21,6 +21,10 @@ const Library = mongoose.model('libraries', {
         type: Number,
         required: true
     },
+    imgSRC: {
+        type: String,
+        required: true
+    },
     status : {
         type: String,
         required: true
