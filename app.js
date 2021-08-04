@@ -20,10 +20,13 @@ dotenv.config({path: './config/config.env'})
 
 
 // load assets
-// DONT DELETE will need this once frontend is completed
-// app.get('/', (req,res)=>{
-//     res.sendFile(__dirname + "/views/demoRoute.html");
-// })
+
+// serve your css as static
+app.use(express.static(__dirname + '/citibankui/ecommsUI'));
+
+app.get('/', (req,res)=>{
+    res.sendFile(__dirname + "/citibankui/ecommsUI/user_index.html");
+})
 // app.get('/index2', (req,res)=>{
 //     res.sendFile(__dirname + "/views/demoRoute2.html");
 // })
