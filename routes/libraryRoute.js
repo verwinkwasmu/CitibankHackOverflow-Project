@@ -23,5 +23,18 @@ router.post('/library/add',  (req,res) => {
     
 })
 
+// Redeem Voucher (change status to Redeemed)
+router.put('/library/redeem/:id', (req,res) => {
+    const status = {
+        status: 'Redeemed'
+    }
+    Library.findByIdAndUpdate(req.params.id, {$set:status}, {new: true}, (err,data) => {
+        if(!err){
+            res.status(200).json({code: 200, message: 'Voucher Successfully Redeemed', updateVoucher:data})
+        } else{
+            console.log(err);
+        }
+    })
+})
 
 module.exports = router 
