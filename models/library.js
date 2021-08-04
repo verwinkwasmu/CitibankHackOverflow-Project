@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const Library = mongoose.model('library', {
+const Library = mongoose.model('libraries', {
     voucherID: {
         type: String,
         required: true
@@ -9,7 +9,7 @@ const Library = mongoose.model('library', {
         type: String,
         required: true
     },
-    price: {
+    costPrice: {
         type: Number,
         required: true
     },
@@ -17,7 +17,7 @@ const Library = mongoose.model('library', {
         type: Number,
         required: true
     },
-    expiryDuration: {
+    lazcoins: {
         type: Number,
         required: true
     },

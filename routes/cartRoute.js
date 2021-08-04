@@ -44,5 +44,18 @@ router.delete('/cart/delete/:id', (req, res) => {
     })
 })
 
+// Delete All vouchers from cart
+router.delete('/cart/delete', (req,res) => {
+    Cart.deleteMany({}, (err,data) => {
+        if (!err){
+            res.status(200).json({code:200, message: 'Voucher Removed Succesfully',
+            deleteVoucher: data})
+        }
+        else{
+            res.status(400).json({code:400, message: 'Failed, Please try again'})
+        }
+    })
+})
+
 
 module.exports = router 

@@ -190,7 +190,7 @@
                                 class="d-block ml-5 font-weight-bold">$8</span><i
                                 class="fa fa-trash-o ml-3 text-black-50"></i>
                         </div>
-                        
+
                     </div>
                     <section id="display"></section>
                 </div>
@@ -218,13 +218,14 @@
                                 class="form-control credit-inputs"></div>
                     </div>
                     <hr class="line">
-                    <div class="d-flex justify-content-between information"><span>Subtotal</span><span>$0</span></div>
-                    <div class="d-flex justify-content-between information"><span>Shipping</span><span>$0</span></div>
+                    <div class="d-flex justify-content-between information"><span>Subtotal</span><span
+                            id="subtotal">$0</span></div>
+                    <!-- <div class="d-flex justify-content-between information"><span>Shipping</span><span>$0</span></div>
                     <div class="d-flex justify-content-between information"><span>Total(Incl.
-                            taxes)</span><span>$0</span></div>
+                            taxes)</span><span>$0</span></div> -->
+                    <div id="checkOut"></div>
 
-                    <button class="btn btn-primary btn-block d-flex justify-content-between mt-3"
-                        type="button"><span>Checkout<i class="fa fa-long-arrow-right ml-1"></i></span></button>
+
                 </div>
             </div>
         </div>
@@ -242,14 +243,25 @@
     <script src="js/Uscripts.js"></script>
     <!-- CART SCRIPTS -->
     <script>
+        var jsonArray = []
         $(document).ready(function () {
             fetch('/cart', {
                 method: 'get'
             })
                 .then(response => response.json())
                 .then(function (data) {
-                    console.log(data)
+                    let subtotal = 0
+
                     for (let voucher of data) {
+                        jsonArray.push({
+                            "voucherID": voucher.voucherID,
+                            "voucherName": voucher.voucherName,
+                            "costPrice": parseInt(voucher.costPrice),
+                            "value": parseInt(voucher.value),
+                            "lazcoins": parseInt(voucher.lazcoins),
+                            "status": "Available"
+                        })
+                        subtotal += voucher.costPrice
                         $('#display').append(`<div class="col mb-5">
                                             <div class="card h-100" id="${voucher._id}">
                                                 <!-- Product image-->
@@ -274,13 +286,18 @@
                                             </div>
                                         </div>`)
                     }
+                    $('#subtotal').text(`$${subtotal}`)
+                    console.log(jsonArray)
+                    $('#checkOut').html(`<button id="checkOutBtn" class="btn btn-primary btn-block d-flex justify-content-between mt-3"
+                        type="button" onclick="checkOut()">Checkout</button>`)
+
                 }).catch(function (error) {
                     console.log(error);
                 });
 
         })
 
-
+        console.log(jsonArray)
         async function removeFromCart(ID) {
             try {
                 const response = await fetch(`/cart/delete/${ID}`, {
@@ -293,6 +310,31 @@
                     location.reload()
                 } else {
                     alert("Error unable to add to cart. Please try again later")
+                }
+
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        async function checkOut() {
+            try {
+                const response = await fetch('/library/add', {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" }, body: JSON.stringify(jsonArray)
+                });
+                const result = await response.json()
+                console.log(result)
+                if (result) {
+                    alert("Successful")
+                    const response = await fetch(`/cart/delete`, {
+                        method: 'DELETE'
+                    });
+                    const result = await response.json()
+                    console.log(result)
+                    window.location.href = '/';
+                } else {
+                    alert("Unable to process. Please try again later")
                 }
 
             } catch (err) {
