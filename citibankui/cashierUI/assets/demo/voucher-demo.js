@@ -2,36 +2,38 @@
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
 
-// Bar Chart Example
-var ctx = document.getElementById("myBarChart");
+
+  
+//bar chart
+var ctx = document.getElementById("voucherChart");
 var myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["LAZER10OFF", "LAZER88SALE", "LAZERDA11", "10OFFAUG", "HAPPY88", "YOITSLAZERDA"],
+    labels: ["Apparel", "Electronics", "Food & Beverage", "Home Decor", "Stationery", "Jewelry", "Miscellaneous"],
     datasets: [{
-      label: "Times Used",
+      label: "Category",
       backgroundColor: "rgba(2,117,216,1)",
-      borderColor: "rgba(2,117,216,1)",
-      data: [30, 200, 340, 130, 78, 82],
+      borderColor: "rgb(255, 192, 203)",
+      data: [10, 69, 40, 55, 35, 59, 33],
     }],
   },
   options: {
     scales: {
       xAxes: [{
         time: {
-          unit: 'month'
+          unit: 'Category'
         },
         gridLines: {
           display: false
         },
         ticks: {
-          maxTicksLimit: 6
+          maxTicksLimit: 8
         }
       }],
       yAxes: [{
         ticks: {
           min: 0,
-          max: 500,
+          max: 100,
           maxTicksLimit: 5
         },
         gridLines: {
