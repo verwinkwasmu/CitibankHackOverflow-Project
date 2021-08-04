@@ -47,7 +47,7 @@
                     <button class="btn btn-outline-dark">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
                     </button>
                 </form>
             </div>
@@ -57,7 +57,7 @@
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Hello Jane</h1>
+                <h1 id="displayUserName" class="display-4 fw-bolder"></h1>
                 <p class="lead fw-normal text-white-50 mb-0">View Your Vouchers</p>
             </div>
         </div>
@@ -113,8 +113,14 @@
     <!-- Core theme JS-->
     <script src="user_js/Uscripts.js"></script>
     <script>
+        let cookie = document.cookie
+        let cookieEncoded = atob(cookie.split('.')[1])
+        let userName = JSON.parse(cookieEncoded).userName
+        
+        $('#displayUserName').text(`Hello ${userName} !`)
+
         $(document).ready(function () {
-            fetch('/library/Available', {
+            fetch(`/library/${userName}/Available`, {
                 method: 'get'
             })
                 .then(response => response.json())
@@ -122,7 +128,7 @@
                     console.log(data)
                     let counter = 0
                     for (let voucher of data) {
-                        counter++
+                        
                         $('#display').append(`<div class="col mb-5">
                                             <div class="card h-100" id="${voucher._id}">
                                                 <!-- Product image-->
@@ -145,7 +151,7 @@
                                             </div>
                                         </div>`)
                     }
-                    $("#active").text(`Active (${counter})`)
+                    
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -174,7 +180,7 @@
                 const result = await response.json()
                 console.log(result)
                 if (result) {
-                    alert("Successful")
+                    alert("Redeemed Successfully!")
                     location.reload()
                 } else {
                     alert("Error unable to add to cart. Please try again later")

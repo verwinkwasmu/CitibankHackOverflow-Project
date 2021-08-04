@@ -162,7 +162,7 @@
                     <button class="btn btn-outline-dark">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
                     </button>
                 </form>
             </div>
@@ -237,9 +237,13 @@
     <script src="user_js/Uscripts.js"></script>
     <!-- CART SCRIPTS -->
     <script>
+        let cookie = document.cookie
+        let cookieEncoded = atob(cookie.split('.')[1])
+        let userName = JSON.parse(cookieEncoded).userName
+
         var jsonArray = []
         $(document).ready(function () {
-            fetch('/cart', {
+            fetch(`/cart/${userName}`, {
                 method: 'get'
             })
                 .then(response => response.json())
@@ -254,7 +258,8 @@
                             "value": parseInt(voucher.value),
                             "lazcoins": parseInt(voucher.lazcoins),
                             "status": "Available",
-                            "imgSRC": voucher.imgSRC
+                            "imgSRC": voucher.imgSRC,
+                            "userName" : voucher.userName
                         })
                         subtotal += voucher.costPrice
                         $('#display').append(`<div class="col mb-3">
@@ -301,7 +306,7 @@
                 const result = await response.json()
                 console.log(result)
                 if (result) {
-                    alert("Successful")
+                    alert("Removed Successfully")
                     location.reload()
                 } else {
                     alert("Error unable to add to cart. Please try again later")
@@ -321,7 +326,7 @@
                 const result = await response.json()
                 console.log(result)
                 if (result) {
-                    alert("Successful")
+                    alert("Check Out Successful")
                     const response = await fetch(`/cart/delete`, {
                         method: 'DELETE'
                     });

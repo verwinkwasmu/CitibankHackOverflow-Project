@@ -42,12 +42,16 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" action="cart.html">
-                    <button class="btn btn-outline-dark">
+                <form class="d-flex">
+                    <button class="btn btn-outline-dark mx-3" onclick="logout()" type="button">
+                        Log Out
+                    </button>
+                    <br>
+                    <a class="btn btn-outline-dark mx-3" href="cart.html">
                         <i class="bi-cart-fill me-1"></i>
                         Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                    </button>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill"></span>
+                    </a>
                 </form>
             </div>
         </div>
@@ -56,7 +60,7 @@
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Hello Jane</h1>
+                <h1 id="displayUserName"class="display-4 fw-bolder"></h1>
                 <p class="lead fw-normal text-white-50 mb-0">Shop for Vouchers</p>
             </div>
         </div>
@@ -65,7 +69,7 @@
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div id="display" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                
+
             </div>
         </div>
     </section>
@@ -81,16 +85,28 @@
     <script src="user_js/Uscripts.js"></script>
 
     <!-- Loading Fetch Data -->
-<script>
-    $(document).ready(function () {
-        fetch('/vouchers', {
-            method: 'get'
-        })
-            .then(response => response.json())
-            .then(function (data) {
-                console.log(data)
-                for (let voucher of data){
-                    $('#display').append(`<div class="col mb-5">
+    <script>
+        let cookie = document.cookie
+        let cookieEncoded = atob(cookie.split('.')[1])
+        let userName = JSON.parse(cookieEncoded).userName
+        
+        $('#displayUserName').text(`Hello ${userName} !`)
+
+        function logout() {
+            document.cookie = 'token' + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"
+            alert('Log Out Successful! See you again')
+            window.location.href = '/'
+        }
+
+        $(document).ready(function () {
+            fetch('/vouchers', {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(function (data) {
+                    console.log(data)
+                    for (let voucher of data) {
+                        $('#display').append(`<div class="col mb-5">
                                             <div class="card h-100" id="${voucher._id}">
                                                 <!-- Product image-->
                                                 <img id="imgSRC-${voucher._id}"class="card-img-top" src="${voucher.imgSRC}" alt="..." />
@@ -112,49 +128,50 @@
                                                 </div>
                                             </div>
                                         </div>`)
-                }
-            }).catch(function (error) {
-                console.log(error);
-            });
-
-    })
-    
-    async function addToCart(ID){
-        let voucherID = $(`#voucherID-${ID}`).text()
-        let voucherName = $(`#voucherName-${ID}`).text()
-        let costPrice = $(`#costPrice-${ID}`).text()
-        let value = $(`#value-${ID}`).text()
-        let lazcoins = $(`#lazcoins-${ID}`).text()
-        let imgSRC = $(`#imgSRC-${ID}`).attr('src')
-        
-        let json_file = {
-            "voucherID": voucherID,
-            "voucherName": voucherName,
-            "costPrice": parseInt(costPrice),
-            "value": parseInt(value),
-            "lazcoins": parseInt(lazcoins),
-            "imgSRC": imgSRC
-        }
-
-        try{
-            const response = await fetch('/cart/add', {
-                method: 'POST',
-                    headers: { "Content-Type": "application/json" }, body: JSON.stringify(json_file)
+                    }
+                }).catch(function (error) {
+                    console.log(error);
                 });
-            const result = await response.json()
-            console.log(result)
-            if (result){
-                alert("Successful")
-            } else{
-                alert("Error unable to add to cart. Please try again later")
+
+        })
+
+        async function addToCart(ID) {
+            let username = userName
+            let voucherID = $(`#voucherID-${ID}`).text()
+            let voucherName = $(`#voucherName-${ID}`).text()
+            let costPrice = $(`#costPrice-${ID}`).text()
+            let value = $(`#value-${ID}`).text()
+            let lazcoins = $(`#lazcoins-${ID}`).text()
+            let imgSRC = $(`#imgSRC-${ID}`).attr('src')
+
+            let json_file = {
+                "userName" : username,
+                "voucherID": voucherID,
+                "voucherName": voucherName,
+                "costPrice": parseInt(costPrice),
+                "value": parseInt(value),
+                "lazcoins": parseInt(lazcoins),
+                "imgSRC": imgSRC
             }
 
-        } catch(err){
-            console.log(err)
+            try {
+                const response = await fetch('/cart/add', {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" }, body: JSON.stringify(json_file)
+                });
+                const result = await response.json()
+                console.log(result)
+                if (result) {
+                    alert("Successful")
+                } else {
+                    alert("Error unable to add to cart. Please try again later")
+                }
+
+            } catch (err) {
+                console.log(err)
+            }
         }
-    }
-</script>
+    </script>
 </body>
 
 </html>
-
