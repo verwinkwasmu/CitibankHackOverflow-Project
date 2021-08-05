@@ -237,9 +237,13 @@
     <script src="user_js/Uscripts.js"></script>
     <!-- CART SCRIPTS -->
     <script>
+        let cookie = document.cookie
+        let cookieEncoded = atob(cookie.split('.')[1])
+        let userName = JSON.parse(cookieEncoded).userName
+
         var jsonArray = []
         $(document).ready(function () {
-            fetch('/cart', {
+            fetch(`/cart/${userName}`, {
                 method: 'get'
             })
                 .then(response => response.json())
@@ -254,7 +258,8 @@
                             "value": parseInt(voucher.value),
                             "lazcoins": parseInt(voucher.lazcoins),
                             "status": "Available",
-                            "imgSRC": voucher.imgSRC
+                            "imgSRC": voucher.imgSRC,
+                            "userName" : voucher.userName
                         })
                         subtotal += voucher.costPrice
                         $('#display').append(`<div class="col mb-5">

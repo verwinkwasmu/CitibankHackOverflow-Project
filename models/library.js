@@ -28,6 +28,10 @@ const Library = mongoose.model('libraries', {
     status : {
         type: String,
         required: true
+    },
+    userName : {
+        type: String,
+        required: true
     }
 })
 

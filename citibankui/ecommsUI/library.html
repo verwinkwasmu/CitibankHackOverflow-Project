@@ -57,7 +57,7 @@
     <header class="bg-dark py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Hello Jane</h1>
+                <h1 id="displayUserName" class="display-4 fw-bolder"></h1>
                 <p class="lead fw-normal text-white-50 mb-0">View Your Vouchers</p>
             </div>
         </div>
@@ -113,8 +113,14 @@
     <!-- Core theme JS-->
     <script src="user_js/Uscripts.js"></script>
     <script>
+        let cookie = document.cookie
+        let cookieEncoded = atob(cookie.split('.')[1])
+        let userName = JSON.parse(cookieEncoded).userName
+        
+        $('#displayUserName').text(`Hello ${userName} !`)
+
         $(document).ready(function () {
-            fetch('/library/Available', {
+            fetch(`/library/${userName}/Available`, {
                 method: 'get'
             })
                 .then(response => response.json())

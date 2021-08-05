@@ -25,6 +25,10 @@ const Cart = mongoose.model('carts', {
         type: Number,
         required: true
     },
+    userName:{
+        type: String,
+        required: true
+    }
     
 })
 
