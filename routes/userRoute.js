@@ -26,7 +26,6 @@ router.get('/users/:userID', async (req,res) => {
 // Create a User
 router.post('/users/add', async (req,res) => {
     const user = new User({
-        userID: req.body.userID,
         userName: req.body.userName,
         password: req.body.password,
         email: req.body.email,
