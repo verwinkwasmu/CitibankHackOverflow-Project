@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router()
 
 const {Library} = require('../models/library')
-
+const {Transaction} = require('../models/transactions')
 // Get Vouchers based on status
 router.get('/library/:userName/:status', async (req,res) => {
     try{
@@ -16,6 +16,12 @@ router.get('/library/:userName/:status', async (req,res) => {
 // add cart items to library
 router.post('/library/add',  (req,res) => {
     Library.insertMany(req.body).then((data) => {
+        res.status(201).send(data);
+    }).catch((error) => {
+        res.status(400).send(error)
+    })
+
+    Transaction.insertMany(req.body).then((data) => {
         res.status(201).send(data);
     }).catch((error) => {
         res.status(400).send(error)

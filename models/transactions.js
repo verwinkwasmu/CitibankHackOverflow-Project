@@ -9,7 +9,7 @@ const Transaction = mongoose.model('transactions', {
         type: String,
         required: true
     },
-    price: {
+    costPrice: {
         type: Number,
         required: true
     },
@@ -17,26 +17,22 @@ const Transaction = mongoose.model('transactions', {
         type: Number,
         required: true
     },
-    expiryDuration: {
+    lazcoins: {
         type: Number,
         required: true
     },
-    totalAmountPaid: {
-        type: Number,
-        required: true
-    },
-    totalAmountSaved: {
-        type: Number,
-        required: true
-    },
-    transactionID: {
+    imgSRC: {
         type: String,
         required: true
     },
-    originalValueOfProduct: {
-        type: Number,
+    status : {
+        type: String,
         required: true
     },
+    userName : {
+        type: String,
+        required: true
+    }
 })
 
 module.exports = {Transaction}

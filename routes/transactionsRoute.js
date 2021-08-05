@@ -4,10 +4,10 @@ const router = express.Router();
 const {Transaction} = require('../models/transactions');
 
 //get all transactions
-router.get('/transactions', async (req,res) => {
+router.get('/transactions/:userName', async (req,res) => {
     try{
-        const transaction = await Transaction.find();
-        res.json(transaction)
+        const transactions = await Transaction.find({userName : req.params.userName});
+        res.json(transactions)
     } catch(err) {
         res.json({message: err})
     }
@@ -35,6 +35,7 @@ router.post('/transactions/add', async (req,res) => {
         res.json({message: err})
     } 
 });
+
 
 // // Create product
 // router.post('/api/products/add', (req,res) => {
